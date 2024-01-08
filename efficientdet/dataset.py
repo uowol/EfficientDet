@@ -24,7 +24,6 @@ class CocoDataset(Dataset):
         # load class names (name -> label)
         categories = self.coco.loadCats(self.coco.getCatIds())
         categories.sort(key=lambda x: x['id'])
-
         self.classes = {}
         for c in categories:
             self.classes[c['name']] = len(self.classes)
@@ -48,7 +47,7 @@ class CocoDataset(Dataset):
 
     def load_image(self, image_index):
         image_info = self.coco.loadImgs(self.image_ids[image_index])[0]
-        path = os.path.join(self.root_dir, self.set_name, image_info['file_name'])
+        path = os.path.join(self.root_dir, self.set_name, image_info['file_name'].split('/')[-1])
         img = cv2.imread(path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
